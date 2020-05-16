@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Latitude Analysis Dashboard with Attitude</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body >
+  <nav class="navbar navbar-default my-navbar-padding">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+          </button>
+        <a class="navbar-brand my-nav-brand" href="index.html">Latitude</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Plots
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="temperature.html">Max Temperature</a></li>
+              <li><a href="humidity.html">Humidity</a></li>
+              <li><a href="cloudiness.html">Cloudiness</a></li>
+              <li><a href="windspeed.html">Wind Speed</a></li>
+            </ul>
+          </li>
+          <li><a href="comparison.html">Comparison</a></li>
+          <li><a href="data.html">Data</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="table-responsive">
+     <h1 align="center">Data</h1>
+     <br />
+     <div align="center">
+      <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
+     </div>
+     <br />
+     <div id="employee_table">
+     </div>
+    </div>
+   </div>
+  </body>
+ </html>
+ 
+ <script>
+ $(document).ready(function(){
+  $('#load_data').click(function(){
+   $.ajax({
+    url:"Resources/cities.csv",
+    dataType:"text",
+    success:function(data)
+    {
+     var employee_data = data.split(/\r?\n|\r/);
+     var table_data = '<table class="table table-bordered table-striped">';
+     for(var count = 0; count<employee_data.length; count++)
+     {
+      var cell_data = employee_data[count].split(",");
+      table_data += '<tr>';
+      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+      {
+       if(count === 0)
+       {
+        table_data += '<th>'+cell_data[cell_count]+'</th>';
+       }
+       else
+       {
+        table_data += '<td>'+cell_data[cell_count]+'</td>';
+       }
+      }
+      table_data += '</tr>';
+     }
+     table_data += '</table>';
+     $('#employee_table').html(table_data);
+    }
+   });
+  });
+  
+ });
+ </script>
+
+
+</body>
+
+</html>
